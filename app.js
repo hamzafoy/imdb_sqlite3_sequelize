@@ -2,7 +2,8 @@ const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: 'movies.db'
+  storage: 'movies.db',
+  logging: false
 });
 
 //Movie Model
@@ -16,9 +17,13 @@ Movie.init({
 
     try {
       await sequelize.authenticate();
-      console.log('Connection to the database successful!');
+      
       const movie = await Movie.create({ title: 'Toy Story' });
       console.log(movie.toJSON());
+
+      const movie2 = await Movie.create({ title: 'The Matrix' });
+      console.log(movie2.toJSON());
+      
     } catch (error) {
       console.error('Error connecting to the database: ', error);
     }
