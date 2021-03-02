@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 const db = require('./db');
-const { Movie } = db.models;
+const { Movie, Person } = db.models;
 
 (async () => {
     await db.sequelize.sync({ force: true });
@@ -28,9 +28,31 @@ const { Movie } = db.models;
         runtime: 142,
         releaseDate: '1994-09-22',
         isAvailableOnVHS: true,
+      });
+
+      const movie4 = await Movie.create({
+        title: 'Mein Hoon Na',
+        runtime: 182,
+        releaseDate: '2004-04-30',
+        isAvailableOnVHS: false,
+      });
+
+      const person = await Person.create({
+        firstName: 'Hamza',
+        lastName: 'Foy'
+      });
+
+      const person2 = await Person.create({
+        firstName: 'Youssef',
+        lastName: 'Almoctar'
       })
 
     } catch (error) {
-      console.error('Error connecting to the database: ', error);
+      if (error.name === 'SequelizeValidationError') {
+        const errors = error.errors.map(err => err.message);
+        console.error('Validation errors: ', errors);
+      } else {
+        throw error;
+      }
     }
   })();

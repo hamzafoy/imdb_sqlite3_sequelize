@@ -49,6 +49,10 @@ module.exports = (sequelize) => {
                 notNull: {
                     //customized error message below
                     msg: 'You cannot leave the "releaseDate" empty!'
+                },
+                isAfter: {
+                    args: '1895-12-27',
+                    msg: 'Please provide a value on or after December 28th, 1895 for "releaseDate"',
                 }
             },
          },
@@ -57,7 +61,9 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValue: false,
          },
-    }, { sequelize });
+    }, {
+        sequelize
+    });
 
     return Movie;
 }
