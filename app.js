@@ -45,7 +45,11 @@ const { Movie, Person } = db.models;
       const person2 = await Person.create({
         firstName: 'Youssef',
         lastName: 'Almoctar'
-      })
+      });
+
+      //Running a READ OPERATION with Sequelize finder methods
+      const movieById = await Movie.findByPk(3);
+      console.log(movieById.toJSON());
 
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
